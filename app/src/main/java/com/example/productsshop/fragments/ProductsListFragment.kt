@@ -1,6 +1,7 @@
 package com.example.productsshop.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +34,9 @@ class ProductsListFragment : Fragment() {
         productsViewModel = ViewModelProvider(this).get(ProductsViewModel::class.java)
 
         productsViewModel.productsLiveData.observe(viewLifecycleOwner, Observer { products ->
-            productsAdapter = ProductsListAdapter(products)
+            productsAdapter = ProductsListAdapter(products, onItemClick = {
+                Log.d("Click", "${it}")
+            })
             binding.recyclerViewProducts.adapter = productsAdapter
         })
     }

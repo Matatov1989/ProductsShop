@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.productsshop.R
 import com.example.productsshop.models.ProductItem
 
-class ProductsListAdapter(private val products: List<ProductItem>) :
+class ProductsListAdapter(
+    private val products: List<ProductItem>,
+    val onItemClick: (ProductItem) -> Unit
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -18,20 +21,32 @@ class ProductsListAdapter(private val products: List<ProductItem>) :
         private const val BASE_VIEW = 2
     }
 
-    class ViewHolderSale(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolderSale(itemView: View, private val onItemClick: (ProductItem) -> Unit) : RecyclerView.ViewHolder(itemView) {
         val imageViewProductSale: ImageView = itemView.findViewById(R.id.imageViewProduct)
         val textViewProductNameSale: TextView = itemView.findViewById(R.id.textViewProductName)
         val textViewProductShortDescriptionSale: TextView = itemView.findViewById(R.id.textViewProductShortDescription)
         val ratingProductSale: RatingBar = itemView.findViewById(R.id.ratingProduct)
         val textViewProductPriceSale: TextView = itemView.findViewById(R.id.textViewProductPrice)
+
+        init {
+            itemView.setOnClickListener {
+                onItemClick.invoke(it.tag as ProductItem)
+            }
+        }
     }
 
-    class ViewHolderBase(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolderBase(itemView: View, private val onItemClick: (ProductItem) -> Unit) : RecyclerView.ViewHolder(itemView) {
         val imageViewProductBase: ImageView = itemView.findViewById(R.id.imageViewProduct)
         val textViewProductNameBase: TextView = itemView.findViewById(R.id.textViewProductName)
         val textViewProductShortDescriptionBase: TextView = itemView.findViewById(R.id.textViewProductShortDescription)
         val ratingProductBase: RatingBar = itemView.findViewById(R.id.ratingProduct)
         val textViewProductPriceBase: TextView = itemView.findViewById(R.id.textViewProductPrice)
+
+        init {
+            itemView.setOnClickListener {
+                onItemClick.invoke(it.tag as ProductItem)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -39,13 +54,13 @@ class ProductsListAdapter(private val products: List<ProductItem>) :
             SALE_VIEW -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val view = inflater.inflate(R.layout.item_product_sale, parent, false)
-                ViewHolderSale(view)
+                ViewHolderSale(view, onItemClick)
             }
 
             BASE_VIEW -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val view = inflater.inflate(R.layout.item_product_base, parent, false)
-                ViewHolderBase(view)
+                ViewHolderBase(view, onItemClick)
             }
 
             else -> {
@@ -72,6 +87,7 @@ class ProductsListAdapter(private val products: List<ProductItem>) :
                 holder.textViewProductPriceBase.text = "${products[position].price} $"
             }
         }
+        holder.itemView.tag = products[position]
     }
 
     override fun getItemCount(): Int {
