@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ProductsShop</string>
+    <string name="item_sale">SALE</string>
 </resources>

@@ -8,7 +8,7 @@ data class ProductItem(
     val longDescription: String,
     val price: Float,
     val discount: Int,
-    val rating: Int,
+    val rating: Float,
     val quantity: Int,
     val color: List<ProductColor>
 )
