@@ -6,11 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.productsshop.adapters.ProductsListAdapter
+import com.example.productsshop.data.ProductsUiState
 import com.example.productsshop.databinding.FragmentProductsListBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -33,11 +36,35 @@ class ProductsListFragment : Fragment() {
     private fun setObserve() {
         productsViewModel = ViewModelProvider(this).get(ProductsViewModel::class.java)
 
-        productsViewModel.productsLiveData.observe(viewLifecycleOwner, Observer { products ->
-            productsAdapter = ProductsListAdapter(products, onItemClick = {
-                Log.d("Click", "${it}")
-            })
-            binding.recyclerViewProducts.adapter = productsAdapter
-        })
+        lifecycleScope.launch {
+            productsViewModel.productsLiveData.collect { uiState ->
+                when(uiState) {
+                    is ProductsUiState.Success -> {
+                        val products = uiState.products
+                        productsAdapter = ProductsListAdapter(products, onItemClick = { selectedPoduct ->
+                            Log.d("Click", "${selectedPoduct}")
+                        })
+                        binding.recyclerViewProducts.adapter = productsAdapter
+                    }
+                    is ProductsUiState.Error -> {
+                        Toast.makeText(context, "Error: ${uiState.exception}", Toast.LENGTH_LONG).show()
+                    }
+                    is ProductsUiState.Loading -> {
+                        if (uiState.isLoad)
+                            showCustomProgressDialog()
+                        else
+                            hideProgressDialog()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun hideProgressDialog() {
+
+    }
+
+    private fun showCustomProgressDialog() {
+
     }
 }
