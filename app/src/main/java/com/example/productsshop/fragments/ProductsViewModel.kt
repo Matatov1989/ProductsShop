@@ -1,11 +1,9 @@
 package com.example.productsshop.fragments
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.productsshop.data.ProductsUiState
-import com.example.productsshop.models.ProductItem
 import com.example.productsshop.repository.ProductsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -23,7 +21,7 @@ class ProductsViewModel @Inject constructor(private val repository: ProductsRepo
 
     init {
         viewModelScope.launch {
-        //    delay(3000L)
+            delay(3000L)
             try {
                 val response = repository.getProducts()
                 val list = response.body()?.products?.sortedBy { it.discount == 0 }
@@ -31,8 +29,6 @@ class ProductsViewModel @Inject constructor(private val repository: ProductsRepo
                 list?.let {
                     productsUiState.value = ProductsUiState.Success(it)
                 }
-
-             //   productsLiveData.value = result.body()?.products
             } catch (e: Exception) {
                 Log.e("RESULT_EXCEPTION", "result: $e")
                 productsUiState.value = ProductsUiState.Error(e)
