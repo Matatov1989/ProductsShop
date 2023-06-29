@@ -23,11 +23,10 @@ class ProductsViewModel @Inject constructor(private val repository: ProductsRepo
 
     init {
         viewModelScope.launch {
-            delay(3000L)
+        //    delay(3000L)
             try {
                 val response = repository.getProducts()
-//                val list = response.body()?.products?.map { it.discount > 0 }?.sorted()
-                val list = response.body()?.products?.sortedBy { it.discount > 0 }
+                val list = response.body()?.products?.sortedBy { it.discount == 0 }
 
                 list?.let {
                     productsUiState.value = ProductsUiState.Success(it)
