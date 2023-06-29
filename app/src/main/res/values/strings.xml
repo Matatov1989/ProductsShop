@@ -2,4 +2,9 @@
     <string name="app_name">ProductsShop</string>
     <string name="item_sale">SALE</string>
     <string name="pleaseWait">Please wait.</string>
+    <string name="productDescription">Description</string>
+    <string name="longDescription">A 4K television with a large screen and vibrant colors. Enjoy high-resolution content with excellent picture quality.</string>
+    <string name="addToCart">Add to cart</string>
+    <string name="ourPrice">Our price: </string>
+    <string name="totalInStock">Total in stock: </string>
 </resources>
