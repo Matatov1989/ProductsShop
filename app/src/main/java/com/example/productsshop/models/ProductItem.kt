@@ -13,7 +13,7 @@ data class ProductItem(
     val discount: Int,
     val rating: Float,
     val quantity: Int,
-    val color: List<ProductColor>
+    val colors: List<String>
 )  : Parcelable {
     companion object {
         @JvmField
@@ -33,7 +33,7 @@ data class ProductItem(
         parcel.readInt(),
         parcel.readFloat(),
         parcel.readInt(),
-        mutableListOf<ProductColor>().apply {
+        mutableListOf<String>().apply {
             parcel.readList(this, ProductColor::class.java.classLoader)
         }
     )
@@ -48,7 +48,7 @@ data class ProductItem(
         dest.writeInt(discount)
         dest.writeFloat(rating)
         dest.writeInt(quantity)
-        dest.writeList(color)
+        dest.writeList(colors)
     }
 
     override fun describeContents(): Int = 0
