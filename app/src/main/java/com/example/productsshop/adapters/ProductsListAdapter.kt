@@ -1,5 +1,7 @@
 package com.example.productsshop.adapters
 
+import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +30,7 @@ class ProductsListAdapter(
         val textViewProductShortDescriptionSale: TextView = itemView.findViewById(R.id.textViewProductShortDescription)
         val ratingProductSale: RatingBar = itemView.findViewById(R.id.ratingProduct)
         val textViewProductPriceSale: TextView = itemView.findViewById(R.id.textViewProductPrice)
+        val textViewProductNewPrice: TextView = itemView.findViewById(R.id.textViewProductNewPrice)
 
         init {
             itemView.setOnClickListener {
@@ -70,6 +73,7 @@ class ProductsListAdapter(
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ViewHolderSale -> {
@@ -84,6 +88,10 @@ class ProductsListAdapter(
                 holder.textViewProductShortDescriptionSale.text = products[position].shortDescription
                 holder.ratingProductSale.rating = products[position].rating
                 holder.textViewProductPriceSale.text = "${products[position].price} $"
+                holder.textViewProductPriceSale.paintFlags = holder.textViewProductPriceSale.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+
+                val newPrice = products[position].price - (products[position].price / products[position].discount)
+                holder.textViewProductNewPrice.text = "${String.format("%.2f", newPrice)} $"
             }
 
             is ViewHolderBase -> {
