@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.productsshop.R
 import com.example.productsshop.adapters.ProductsListAdapter
 import com.example.productsshop.data.ProductsUiState
@@ -33,10 +36,10 @@ class ProductsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setObserve()
+        setObserve(view)
     }
 
-    private fun setObserve() {
+    private fun setObserve(view: View) {
         productsViewModel = ViewModelProvider(this).get(ProductsViewModel::class.java)
 
         lifecycleScope.launch {
@@ -44,8 +47,11 @@ class ProductsListFragment : Fragment() {
                 when(uiState) {
                     is ProductsUiState.Success -> {
                         val products = uiState.products
-                        productsAdapter = ProductsListAdapter(products, onItemClick = { selectedPoduct ->
-                            Log.d("Click", "${selectedPoduct}")
+                        productsAdapter = ProductsListAdapter(products, onItemClick = { selectedProduct ->
+                            Log.d("Click", "${selectedProduct}")
+
+                            val action = ProductsListFragmentDirections.actionProductsListFragmentToProductInfoFragment(selectedProduct)
+                            findNavController().navigate(action)
                         })
                         binding.recyclerViewProducts.adapter = productsAdapter
                     }

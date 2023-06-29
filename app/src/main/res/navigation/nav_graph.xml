@@ -9,5 +9,17 @@
         android:id="@+id/productsListFragment"
         android:name="com.example.productsshop.fragments.ProductsListFragment"
         android:label="fragment_products_list"
-        tools:layout="@layout/fragment_products_list" />
+        tools:layout="@layout/fragment_products_list" >
+        <action
+            android:id="@+id/action_productsListFragment_to_productInfoFragment"
+            app:destination="@id/productInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productInfoFragment"
+        android:name="com.example.productsshop.fragments.ProductInfoFragment"
+        android:label="ProductInfoFragment" >
+        <argument
+            android:name="productItem"
+            app:argType="com.example.productsshop.models.ProductItem" />
+    </fragment>
 </navigation>
