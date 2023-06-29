@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.productsshop.R
 import com.example.productsshop.models.ProductItem
 
@@ -72,7 +73,13 @@ class ProductsListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ViewHolderSale -> {
-//                holder.imageViewProductSale.setImageBitmap(products[position].imageUrl)
+                Glide
+                    .with(holder.itemView)
+                    .load(products[position].imageUrl)
+                    .centerCrop()
+                    .placeholder(R.drawable.baseline_android_24)
+                    .into(holder.imageViewProductSale)
+
                 holder.textViewProductNameSale.text = products[position].name
                 holder.textViewProductShortDescriptionSale.text = products[position].shortDescription
                 holder.ratingProductSale.rating = products[position].rating
@@ -80,7 +87,13 @@ class ProductsListAdapter(
             }
 
             is ViewHolderBase -> {
-//                holder.imageViewProductBase.setImageBitmap(products[position].imageUrl)
+                Glide
+                    .with(holder.itemView)
+                    .load(products[position].imageUrl)
+                    .centerCrop()
+                    .placeholder(R.drawable.baseline_android_24)
+                    .into(holder.imageViewProductBase)
+
                 holder.textViewProductNameBase.text = products[position].name
                 holder.textViewProductShortDescriptionBase.text = products[position].shortDescription
                 holder.ratingProductBase.rating = products[position].rating
