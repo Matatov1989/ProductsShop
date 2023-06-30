@@ -7,16 +7,23 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.productsshop.R
+import com.example.productsshop.fragments.cart.CartViewModel
 import com.example.productsshop.models.ProductItem
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 open class BaseFragment : Fragment() {
 
     lateinit var progressDialog: Dialog
     lateinit var productItem: ProductItem
+    lateinit var cartViewModel: CartViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        cartViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
 
         progressDialog = Dialog(requireContext())
 
@@ -28,10 +35,6 @@ open class BaseFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
-
-        arguments?.let {
-            productItem = ProductInfoFragmentArgs.fromBundle(it).productItem
-        }
     }
 
     fun initToolbar(toolbar: Toolbar, title: String, isBackButton: Boolean = false) {

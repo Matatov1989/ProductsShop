@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import com.example.productsshop.R
 import com.example.productsshop.databinding.FragmentProductInfoBinding
-import com.example.productsshop.fragments.cart.CartViewModel
 import com.example.productsshop.models.CartModel
 
 
@@ -25,6 +23,9 @@ class ProductInfoFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.let {
+            productItem = ProductInfoFragmentArgs.fromBundle(it).productItem
+        }
         initToolbar(binding.toolbar, getString(R.string.titleInformation), true)
         initClickListeners()
         binding.lifecycleOwner = this
@@ -42,7 +43,7 @@ class ProductInfoFragment : BaseFragment() {
                 price = productItem.price,
                 imageUrl = productItem.imageUrl
             )
-          //  cartViewModel.addProductToCart(cartProduct)
+            cartViewModel.addProductToCart(cartProduct)
         }
     }
 }

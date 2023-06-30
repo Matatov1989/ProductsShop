@@ -27,7 +27,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageViewProduct"
+                    android:id="@+id/imageViewCartProduct"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -43,7 +43,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewProductName"
+                    android:id="@+id/textViewCartProductName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="30sp"
@@ -52,7 +52,7 @@
                     tools:text="Smartphone" />
 
                 <TextView
-                    android:id="@+id/textViewProductPrice"
+                    android:id="@+id/textViewCartProductPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"

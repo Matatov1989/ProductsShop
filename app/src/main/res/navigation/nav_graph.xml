@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_productsListFragment_to_productInfoFragment"
             app:destination="@id/productInfoFragment" />
+        <action
+            android:id="@+id/action_productsListFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
     <fragment
         android:id="@+id/productInfoFragment"
@@ -22,4 +25,9 @@
             android:name="productItem"
             app:argType="com.example.productsshop.models.ProductItem" />
     </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.productsshop.fragments.cart.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" />
 </navigation>

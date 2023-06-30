@@ -34,8 +34,8 @@ class CartAdapter(private val products: List<CartModel>) :
     override fun getItemCount(): Int = products.size
 
     class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textViewName: TextView = itemView.findViewById(R.id.textViewProductName)
-        val textViewPrice: TextView = itemView.findViewById(R.id.textViewPrice)
-        val imageUrl: ImageView = itemView.findViewById(R.id.imageViewProduct)
+        val textViewName: TextView = itemView.findViewById(R.id.textViewCartProductName)
+        val textViewPrice: TextView = itemView.findViewById(R.id.textViewCartProductPrice)
+        val imageUrl: ImageView = itemView.findViewById(R.id.imageViewCartProduct)
     }
 }
