@@ -1,4 +1,4 @@
-package com.example.productsshop.fragments
+package com.example.productsshop.fragments.list
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -16,13 +16,14 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductsViewModel @Inject constructor(private val repository: ProductsRepository) : ViewModel() {
 
-    private val productsUiState = MutableStateFlow<ProductsUiState>(ProductsUiState.Loading(true))
-    val productsLiveData: StateFlow<ProductsUiState> get() = productsUiState
+    private val productsUiState = MutableStateFlow<ProductsUiState>(ProductsUiState.Success(emptyList()))
+    val productsLiveData: StateFlow<ProductsUiState> = productsUiState
 
-    init {
+    fun getProducts() {
         viewModelScope.launch {
-            delay(3000L)
+            delay(1000L)
             try {
+                productsUiState.value = ProductsUiState.Loading(true)
                 val response = repository.getProducts()
                 val list = response.body()?.products?.sortedBy { it.discount == 0 }
 
@@ -37,4 +38,24 @@ class ProductsViewModel @Inject constructor(private val repository: ProductsRepo
             }
         }
     }
+
+//    init {
+//        viewModelScope.launch {
+//            delay(1000L)
+//            try {
+//                productsUiState.value = ProductsUiState.Loading(true)
+//                val response = repository.getProducts()
+//                val list = response.body()?.products?.sortedBy { it.discount == 0 }
+//
+//                list?.let {
+//                    productsUiState.value = ProductsUiState.Success(it)
+//                }
+//            } catch (e: Exception) {
+//                Log.e("RESULT_EXCEPTION", "result: $e")
+//                productsUiState.value = ProductsUiState.Error(e)
+//            } finally {
+//                productsUiState.value = ProductsUiState.Loading(false)
+//            }
+//        }
+//    }
 }
