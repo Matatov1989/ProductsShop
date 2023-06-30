@@ -73,4 +73,10 @@ dependencies {
     // glide library
     implementation 'com.github.bumptech.glide:glide:4.13.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.1'
+
+    // Room Dao
+    implementation "androidx.room:room-ktx:2.5.2"
+    implementation "androidx.room:room-runtime:2.5.2"
+    annotationProcessor "androidx.room:room-compiler:2.5.2"
+    kapt "androidx.room:room-compiler:2.5.2"
 }
