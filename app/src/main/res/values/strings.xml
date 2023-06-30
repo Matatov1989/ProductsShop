@@ -9,4 +9,5 @@
     <string name="totalInStock">Total in stock: %1$d</string>
     <string name="colors">Colors:</string>
     <string name="titleInformation">Information</string>
+    <string name="titleCart">Cart</string>
 </resources>
