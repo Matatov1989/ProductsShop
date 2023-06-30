@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.productsshop.R
 import com.example.productsshop.adapters.ProductsListAdapter
 import com.example.productsshop.data.ProductsUiState
 import com.example.productsshop.databinding.FragmentProductsListBinding
@@ -32,6 +33,7 @@ class ProductsListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolbar(binding.toolbar, getString(R.string.app_name))
         setObserve()
     }
 

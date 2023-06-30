@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.productsshop.R
 import com.example.productsshop.databinding.FragmentProductInfoBinding
 
 
@@ -21,6 +22,7 @@ class ProductInfoFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolbar(binding.toolbar, getString(R.string.titleInformation), true)
         binding.lifecycleOwner = this
         binding.product = productItem
     }
