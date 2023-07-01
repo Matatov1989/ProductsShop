@@ -7,12 +7,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.productsshop.models.CartModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CartDao {
 
     @Query("SELECT * FROM CartTable")
-    suspend fun getProducts() : List<CartModel>
+    fun getProducts() : Flow<List<CartModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProduct(product: CartModel)
