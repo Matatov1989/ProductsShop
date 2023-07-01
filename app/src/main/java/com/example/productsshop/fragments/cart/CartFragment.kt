@@ -65,7 +65,9 @@ class CartFragment : BaseFragment() {
 
     private fun setObserve() {
         cartViewModel.cartProductsLiveData.observe(viewLifecycleOwner, Observer { cartProducts ->
-            cartAdapter = CartAdapter(cartProducts)
+            cartAdapter = CartAdapter(cartProducts, onItemUpdate = { updateItem ->
+                cartViewModel.updateItemToCart(updateItem)
+            })
             binding.recyclerViewCartProducts.adapter = cartAdapter
 
             initSwipe(cartProducts)

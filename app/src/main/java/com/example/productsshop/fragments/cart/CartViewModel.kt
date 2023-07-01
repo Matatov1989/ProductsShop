@@ -55,6 +55,11 @@ class CartViewModel @Inject constructor(private val repository: CartRepository) 
         calculateTotalSum()
     }
 
+    fun updateItemToCart(product: CartModel) = viewModelScope.launch {
+        repository.updateProduct(product)
+        calculateTotalSum()
+    }
+
     fun clearCart() = viewModelScope.launch {
         repository.clearCart()
         cartProductsLiveData.value = emptyList()
@@ -63,7 +68,7 @@ class CartViewModel @Inject constructor(private val repository: CartRepository) 
 
     fun calculateTotalSum() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.calculateTotalSum()
+            val result = repository.calculateTotalSum() ?: 0.0F
             totalSum.postValue(result)
         }
     }

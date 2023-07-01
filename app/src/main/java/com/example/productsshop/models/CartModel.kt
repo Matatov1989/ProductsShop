@@ -11,8 +11,8 @@ data class CartModel(
     @PrimaryKey
     @ColumnInfo(name = "id") val id: Int,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "price") val price: Float,
+    @ColumnInfo(name = "price") var price: Float,
     @ColumnInfo(name = "imageUrl") val imageUrl: String,
-    @ColumnInfo(name = "quantity") val quantity: Int,
+    @ColumnInfo(name = "quantity") var quantity: Int,
     @ColumnInfo(name = "color") val color: String
 )

@@ -28,5 +28,5 @@ interface CartDao {
     suspend fun deleteAllProducts()
 
     @Query("SELECT SUM(price) FROM CartTable")
-    suspend fun calculateTotalSum(): Float
+    suspend fun calculateTotalSum(): Float?
 }
