@@ -1,14 +1,22 @@
 package com.example.productsshop.fragments
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.productsshop.R
 import com.example.productsshop.fragments.cart.CartViewModel
+import com.example.productsshop.fragments.list.ProductsListFragmentDirections
 import com.example.productsshop.models.ProductItem
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,6 +55,28 @@ open class BaseFragment : Fragment() {
                 requireActivity().supportFragmentManager.popBackStack()
             }
         }
+    }
+
+    fun initMenuToolBar(menuFragment: Int) {
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(menuFragment, menu)
+            }
+
+            @SuppressLint("NonConstantResourceId")
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when (menuItem.itemId) {
+                    R.id.action_clear_cart -> {
+                        cartViewModel.clearCart()
+                    }
+                    R.id.action_open_cart -> {
+                        val action = ProductsListFragmentDirections.actionProductsListFragmentToCartFragment()
+                        findNavController().navigate(action)
+                    }
+                }
+                return false
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     fun hideProgressDialog() {

@@ -1,15 +1,10 @@
 package com.example.productsshop.fragments.list
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -37,32 +32,13 @@ class ProductsListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(binding.toolbar, getString(R.string.app_name))
-        initMenuToolBar()
+        initMenuToolBar(R.menu.menu_products_list)
         setObserve()
     }
 
     override fun onResume() {
         super.onResume()
         productsViewModel.getProducts()
-    }
-
-    private fun initMenuToolBar() {
-        requireActivity().addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_products_list, menu)
-            }
-
-            @SuppressLint("NonConstantResourceId")
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    R.id.action_open_cart -> {
-                        val action = ProductsListFragmentDirections.actionProductsListFragmentToCartFragment()
-                        findNavController().navigate(action)
-                    }
-                }
-                return false
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun setObserve() {

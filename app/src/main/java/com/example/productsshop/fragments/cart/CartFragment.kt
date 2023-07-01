@@ -1,15 +1,9 @@
 package com.example.productsshop.fragments.cart
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -36,31 +30,13 @@ class CartFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         cartViewModel.calculateTotalSum()
-        initMenuToolBar()
+        initMenuToolBar(R.menu.menu_cart)
         setObserve()
     }
 
     override fun onResume() {
         super.onResume()
         cartViewModel.fetchProducts()
-    }
-
-    private fun initMenuToolBar() {
-        requireActivity().addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_cart, menu)
-            }
-
-            @SuppressLint("NonConstantResourceId")
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    R.id.action_clear_cart -> {
-                        cartViewModel.clearCart()
-                    }
-                }
-                return false
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun setObserve() {

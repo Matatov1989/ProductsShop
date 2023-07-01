@@ -24,14 +24,16 @@ class ProductInfoFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {
-            productItem = ProductInfoFragmentArgs.fromBundle(it).productItem
-        }
+        getProductItem()
         initToolbar(binding.toolbar, getString(R.string.titleInformation), true)
         initClickListeners()
-        binding.lifecycleOwner = this
-        binding.product = productItem
+    }
 
+    private fun getProductItem() {
+        arguments?.let {
+            productItem = ProductInfoFragmentArgs.fromBundle(it).productItem
+            binding.product = productItem
+        }
     }
 
     private fun initClickListeners() {
