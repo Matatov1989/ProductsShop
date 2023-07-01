@@ -1,13 +1,11 @@
 package com.example.productsshop.adapters
 
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.productsshop.R
-import com.example.productsshop.models.ProductColor
 
 object BindingAdapters {
 

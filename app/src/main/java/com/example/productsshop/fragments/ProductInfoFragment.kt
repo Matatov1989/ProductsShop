@@ -36,23 +36,7 @@ class ProductInfoFragment : BaseFragment() {
 
     private fun initClickListeners() {
         binding.buttonAddToCart.setOnClickListener {
-
-            val amount = binding.textViewAmount.text.toString().toInt()
-            val price = if (productItem.discount == 0)
-                productItem.price * amount
-            else (productItem.price - (productItem.price / productItem.discount)) * amount
-
-            val cartProduct = CartModel(
-                id = productItem.id,
-                name = productItem.name,
-                price = price,
-                imageUrl = productItem.imageUrl,
-                quantity = amount,
-                color = binding.spinnerColors.selectedItem.toString()
-            )
-            cartViewModel.addProductToCart(cartProduct)
-
-            Snackbar.make(it, getString(R.string.snackBarItemInCart), Snackbar.LENGTH_LONG).show()
+            addProductToCart()
         }
 
         binding.floatingActionButtonInc.setOnClickListener {
@@ -66,5 +50,24 @@ class ProductInfoFragment : BaseFragment() {
             if (amount.dec() >= 1)
                 binding.textViewAmount.text = amount.dec().toString()
         }
+    }
+
+    private fun addProductToCart() {
+        val amount = binding.textViewAmount.text.toString().toInt()
+        val price = if (productItem.discount == 0)
+            productItem.price * amount
+        else (productItem.price - (productItem.price / productItem.discount)) * amount
+
+        val cartProduct = CartModel(
+            id = productItem.id,
+            name = productItem.name,
+            price = price,
+            imageUrl = productItem.imageUrl,
+            quantity = amount,
+            color = binding.spinnerColors.selectedItem.toString()
+        )
+        cartViewModel.addProductToCart(cartProduct)
+
+        Snackbar.make(binding.buttonAddToCart, getString(R.string.snackBarItemInCart), Snackbar.LENGTH_LONG).show()
     }
 }

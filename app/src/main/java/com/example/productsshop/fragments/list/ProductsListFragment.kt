@@ -14,14 +14,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.productsshop.R
 import com.example.productsshop.adapters.ProductsListAdapter
 import com.example.productsshop.data.ProductsUiState
 import com.example.productsshop.databinding.FragmentProductsListBinding
 import com.example.productsshop.fragments.BaseFragment
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 
