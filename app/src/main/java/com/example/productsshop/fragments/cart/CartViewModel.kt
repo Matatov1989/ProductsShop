@@ -49,4 +49,8 @@ class CartViewModel @Inject constructor(private val repository: CartRepository) 
         repository.insertProduct(product)
     }
 
+    fun removeProductFromCart(product: CartModel) = viewModelScope.launch {
+        repository.deleteProduct(product)
+    }
+
 }

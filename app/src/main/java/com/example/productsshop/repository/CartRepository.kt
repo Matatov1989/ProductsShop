@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class CartRepository @Inject constructor(private val cartDao: CartDao) {
 
-    suspend fun getProducts(): Flow<List<CartModel>> = cartDao.getProducts()
+    fun getProducts(): Flow<List<CartModel>> = cartDao.getProducts()
 
     suspend fun insertProduct(product: CartModel) = cartDao.insertProduct(product)
 

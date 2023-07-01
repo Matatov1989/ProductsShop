@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.productsshop.R
 import com.example.productsshop.adapters.CartAdapter
 import com.example.productsshop.databinding.FragmentCartBinding
 import com.example.productsshop.fragments.BaseFragment
+import com.example.productsshop.models.CartModel
 
 
 class CartFragment : BaseFragment() {
@@ -39,6 +42,23 @@ class CartFragment : BaseFragment() {
         cartViewModel.cartProductsLiveData.observe(viewLifecycleOwner, Observer { cartProducts ->
             cartAdapter = CartAdapter(cartProducts)
             binding.recyclerViewCartProducts.adapter = cartAdapter
+
+            initSwipe(cartProducts)
         })
+    }
+
+    private fun initSwipe(cartProducts: List<CartModel>) {
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                cartViewModel.removeProductFromCart(cartProducts[viewHolder.absoluteAdapterPosition])
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerViewCartProducts)
     }
 }
