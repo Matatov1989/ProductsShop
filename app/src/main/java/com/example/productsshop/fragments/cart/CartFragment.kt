@@ -11,14 +11,12 @@ import android.view.ViewGroup
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.productsshop.R
 import com.example.productsshop.adapters.CartAdapter
 import com.example.productsshop.databinding.FragmentCartBinding
 import com.example.productsshop.fragments.BaseFragment
-import com.example.productsshop.fragments.list.ProductsListFragmentDirections
 import com.example.productsshop.models.CartModel
 
 
@@ -37,7 +35,7 @@ class CartFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initToolbar(binding.toolbar, getString(R.string.titleCart), true)
+        cartViewModel.calculateTotalSum()
         initMenuToolBar()
         setObserve()
     }
@@ -71,6 +69,10 @@ class CartFragment : BaseFragment() {
             binding.recyclerViewCartProducts.adapter = cartAdapter
 
             initSwipe(cartProducts)
+        })
+
+        cartViewModel.totalSum.observe(viewLifecycleOwner, Observer { totalSum ->
+            initToolbar(binding.toolbar, getString(R.string.titleCartTotalSum, totalSum), true)
         })
     }
 

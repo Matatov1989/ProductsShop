@@ -9,7 +9,7 @@
     <string name="totalInStock">Total in stock: %1$d</string>
     <string name="colors">Colors:</string>
     <string name="titleInformation">Information</string>
-    <string name="titleCart">Cart</string>
+    <string name="titleCartTotalSum">Total sum is %1$.2f $</string>
     <string name="actionBtnOpenCart">open</string>
     <string name="actionBtnClearCart">clear</string>
 </resources>

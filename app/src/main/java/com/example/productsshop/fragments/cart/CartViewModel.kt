@@ -24,6 +24,7 @@ import javax.inject.Inject
 class CartViewModel @Inject constructor(private val repository: CartRepository) : ViewModel() {
 
     val cartProductsLiveData = MutableLiveData<List<CartModel>>()
+    val totalSum = MutableLiveData<Float>()
 
     private val cartProducts: Flow<List<CartModel>> = flow {
         try {
@@ -51,10 +52,19 @@ class CartViewModel @Inject constructor(private val repository: CartRepository) 
 
     fun removeProductFromCart(product: CartModel) = viewModelScope.launch {
         repository.deleteProduct(product)
+        calculateTotalSum()
     }
 
     fun clearCart() = viewModelScope.launch {
         repository.clearCart()
         cartProductsLiveData.value = emptyList()
+        totalSum.postValue(0.0f)
+    }
+
+    fun calculateTotalSum() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = repository.calculateTotalSum()
+            totalSum.postValue(result)
+        }
     }
 }
