@@ -1,16 +1,24 @@
 package com.example.productsshop.fragments.cart
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.productsshop.R
 import com.example.productsshop.adapters.CartAdapter
 import com.example.productsshop.databinding.FragmentCartBinding
 import com.example.productsshop.fragments.BaseFragment
+import com.example.productsshop.fragments.list.ProductsListFragmentDirections
 import com.example.productsshop.models.CartModel
 
 
@@ -27,15 +35,34 @@ class CartFragment : BaseFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initToolbar(binding.toolbar, getString(R.string.titleCart), true)
+        initMenuToolBar()
+        setObserve()
+    }
+
     override fun onResume() {
         super.onResume()
         cartViewModel.fetchProducts()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initToolbar(binding.toolbar, getString(R.string.titleCart), true)
-        setObserve()
+    private fun initMenuToolBar() {
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_cart, menu)
+            }
+
+            @SuppressLint("NonConstantResourceId")
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when (menuItem.itemId) {
+                    R.id.action_clear_cart -> {
+                        cartViewModel.clearCart()
+                    }
+                }
+                return false
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun setObserve() {

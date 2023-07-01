@@ -53,4 +53,8 @@ class CartViewModel @Inject constructor(private val repository: CartRepository) 
         repository.deleteProduct(product)
     }
 
+    fun clearCart() = viewModelScope.launch {
+        repository.clearCart()
+        cartProductsLiveData.value = emptyList()
+    }
 }

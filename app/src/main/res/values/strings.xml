@@ -11,4 +11,5 @@
     <string name="titleInformation">Information</string>
     <string name="titleCart">Cart</string>
     <string name="actionBtnOpenCart">open</string>
+    <string name="actionBtnClearCart">clear</string>
 </resources>
