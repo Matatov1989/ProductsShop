@@ -12,4 +12,5 @@
     <string name="titleCartTotalSum">Total sum is %1$.2f $</string>
     <string name="actionBtnOpenCart">open</string>
     <string name="actionBtnClearCart">clear</string>
+    <string name="snackBarItemInCart">Item in cart</string>
 </resources>

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.example.productsshop.R
 import com.example.productsshop.databinding.FragmentProductInfoBinding
 import com.example.productsshop.models.CartModel
+import com.google.android.material.snackbar.Snackbar
 
 
 class ProductInfoFragment : BaseFragment() {
@@ -34,18 +35,36 @@ class ProductInfoFragment : BaseFragment() {
     }
 
     private fun initClickListeners() {
-
         binding.buttonAddToCart.setOnClickListener {
+
+            val amount = binding.textViewAmount.text.toString().toInt()
+            val price = if (productItem.discount == 0)
+                productItem.price * amount
+            else (productItem.price - (productItem.price / productItem.discount)) * amount
 
             val cartProduct = CartModel(
                 id = productItem.id,
                 name = productItem.name,
-                price = productItem.price,
+                price = price,
                 imageUrl = productItem.imageUrl,
-                quantity = 1,
+                quantity = amount,
                 color = binding.spinnerColors.selectedItem.toString()
             )
             cartViewModel.addProductToCart(cartProduct)
+
+            Snackbar.make(it, getString(R.string.snackBarItemInCart), Snackbar.LENGTH_LONG).show()
+        }
+
+        binding.floatingActionButtonInc.setOnClickListener {
+            var amount = binding.textViewAmount.text.toString().toInt()
+            if (amount.inc() <= productItem.quantity)
+                binding.textViewAmount.text = amount.inc().toString()
+        }
+
+        binding.floatingActionButtonDec.setOnClickListener {
+            var amount = binding.textViewAmount.text.toString().toInt()
+            if (amount.dec() >= 1)
+                binding.textViewAmount.text = amount.dec().toString()
         }
     }
 }
