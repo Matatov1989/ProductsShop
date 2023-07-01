@@ -41,7 +41,9 @@ class ProductInfoFragment : BaseFragment() {
                 id = productItem.id,
                 name = productItem.name,
                 price = productItem.price,
-                imageUrl = productItem.imageUrl
+                imageUrl = productItem.imageUrl,
+                quantity = 1,
+                color = binding.spinnerColors.selectedItem.toString()
             )
             cartViewModel.addProductToCart(cartProduct)
         }
